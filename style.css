@@ -1,0 +1,64 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#corazon-globo {
+    /* Diseño del corazón (usando un truco CSS) */
+    width: 15vw; /* Tamaño pequeño, adaptable al ancho de la ventana */
+    height: 12vw;
+    background: #ff0000;
+    position: relative;
+    transform: rotate(-45deg); /* Gira para formar la punta */
+    cursor: pointer;
+    transition: all 1.5s ease-out; /* Habilita transiciones suaves para el crecimiento */
+}
+
+/* Pseudo-elementos para las curvas superiores del corazón */
+#corazon-globo::before,
+#corazon-globo::after {
+    content: "";
+    width: 15vw;
+    height: 12vw;
+    background: #ff0000;
+    border-radius: 50%;
+    position: absolute;
+}
+
+#corazon-globo::before {
+    left: -7.5vw;
+}
+
+#corazon-globo::after {
+    top: -6vw;
+}
+
+/* Estilo del texto en el centro */
+#texto-principal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg); /* Des-gira el texto */
+    color: white;
+    font-size: 1.5vw;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    z-index: 10;
+    pointer-events: none; /* Ignora el clic para que solo afecte al corazón */
+}
+
+/* Estilo para la explosión */
+.explosion {
+    animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+    }
+}
