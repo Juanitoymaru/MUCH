@@ -4,12 +4,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
     let clicks = 0;
-    const maxClicks = 5; // Número de veces que dirá "Mucho"
-    let currentScale = 1; 
+    const maxClicks = 4; // Reducido a 4 para un crecimiento más rápido al máximo
+    let currentScale = 1; // Inicia en escala 1
 
-    // Usar 'click' y 'touchstart' para PC y móviles
+    // Usar un solo listener para manejar clicks y taps
     corazon.addEventListener('click', manejarInteraccion);
-    corazon.addEventListener('touchstart', manejarInteraccion);
 
     function manejarInteraccion(e) {
         e.preventDefault(); 
@@ -19,9 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
         clicks++;
 
         // 1. Aumentar el tamaño del corazón
-        currentScale += 0.6; // Incremento de tamaño
+        currentScale += 0.8; // Aumento de tamaño más dramático
         
-        // El CSS maneja la posición y el giro; solo agregamos la escala
+        // Aplicar la transformación completa: centrado + rotación + nueva escala
         corazon.style.transform = `translate(-50%, -50%) rotate(-45deg) scale(${currentScale})`;
         
         // 2. Mostrar "Mucho"
@@ -29,10 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Si es el último clic, inicia la secuencia de explosión
         if (clicks === maxClicks) {
-            // 3. Llenar la pantalla (crecimiento final rápido)
+            // 3. Llenar la pantalla (crecimiento final)
             setTimeout(() => {
-                corazon.style.transition = 'all 0.8s ease-in-out';
-                // Escala gigante para que ocupe la pantalla
+                // Aplicar transición rápida de explosión
+                corazon.style.transition = 'all 0.8s ease-in-out'; 
+                // Escala gigante para que ocupe toda la pantalla
                 corazon.style.transform = `translate(-50%, -50%) rotate(-45deg) scale(100)`; 
                 
                 // 4. Espera el llenado y luego explota
