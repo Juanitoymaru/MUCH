@@ -13,10 +13,10 @@ body {
     margin: 0;
     /* Fondo con un suave gradiente romántico */
     background: radial-gradient(circle, var(--bg-color) 0%, #f0c9d3 100%); 
-    overflow: hidden; /* Importante para ocultar el corazón antes de que entre */
+    overflow: hidden; 
 }
 
-/* ---------------------- ESTILO DEL CORAZÓN Y ENTRADA ---------------------- */
+/* ---------------------- ESTILO DEL CORAZÓN ---------------------- */
 
 #corazon-globo {
     /* Diseño y tamaño inicial */
@@ -25,21 +25,15 @@ body {
     background: var(--heart-color);
     position: fixed; 
     top: 50%;
-    left: -30vw; /* INICIA FUERA DE PANTALLA A LA IZQUIERDA */
-    transform: translateY(-50%) rotate(-45deg); 
+    left: 50%; /* INICIA CENTRADO */
+    /* Centrado + Rotación. Scale por defecto es 1. */
+    transform: translate(-50%, -50%) rotate(-45deg); 
     cursor: pointer;
-    transition: all 1.5s ease-out; /* Habilita transiciones suaves */
+    /* TRANSICIÓN MUCHO MÁS RÁPIDA (0.3s) para ver el crecimiento en cada click */
+    transition: all 0.3s ease-out; 
     z-index: 10;
     
-    /* Animación para que entre de lado */
-    animation: slideIn 3s forwards ease-in-out;
-    animation-delay: 0.5s;
-}
-
-/* Keyframes para la animación de entrada */
-@keyframes slideIn {
-    0% { left: -30vw; } /* Posición inicial */
-    100% { left: 50%; transform: translate(-50%, -50%) rotate(-45deg); } /* Posición final centrada */
+    /* LA ANIMACIÓN DE ENTRADA DE LADO HA SIDO ELIMINADA */
 }
 
 /* Pseudo-elementos para las curvas superiores del corazón */
@@ -67,7 +61,7 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) rotate(45deg); /* Des-gira el texto */
+    transform: translate(-50%, -50%) rotate(45deg); 
     color: white;
     font-size: calc(var(--initial-size) / 8); 
     font-weight: bold;
@@ -116,5 +110,5 @@ body {
 @keyframes floatUp {
     0% { transform: translateY(0) scale(1); opacity: 0; }
     50% { opacity: 1; }
-    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } /* Se van hacia arriba */
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } 
 }
