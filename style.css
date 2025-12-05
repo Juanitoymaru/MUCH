@@ -1,64 +1,120 @@
+:root {
+    --heart-color: #e53966;    /* Rosa Fuerte/Rojo Romántico */
+    --bg-color: #f7e9ec;       /* Rosa muy claro para el fondo */
+    --text-color: #880e4f;     /* Vino tinto oscuro para el texto */
+    --initial-size: 20vmin;    /* Tamaño inicial responsivo (mínimo entre ancho/alto del viewport) */
+}
+
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #f0f0f0;
+    /* Fondo con un suave gradiente romántico */
+    background: radial-gradient(circle, var(--bg-color) 0%, #f0c9d3 100%); 
+    overflow: hidden; /* Importante para ocultar el corazón antes de que entre */
 }
 
+/* ---------------------- ESTILO DEL CORAZÓN Y ENTRADA ---------------------- */
+
 #corazon-globo {
-    /* Diseño del corazón (usando un truco CSS) */
-    width: 15vw; /* Tamaño pequeño, adaptable al ancho de la ventana */
-    height: 12vw;
-    background: #ff0000;
-    position: relative;
-    transform: rotate(-45deg); /* Gira para formar la punta */
+    /* Diseño y tamaño inicial */
+    width: var(--initial-size); 
+    height: calc(var(--initial-size) * 0.8);
+    background: var(--heart-color);
+    position: fixed; 
+    top: 50%;
+    left: -30vw; /* INICIA FUERA DE PANTALLA A LA IZQUIERDA */
+    transform: translateY(-50%) rotate(-45deg); 
     cursor: pointer;
-    transition: all 1.5s ease-out; /* Habilita transiciones suaves para el crecimiento */
+    transition: all 1.5s ease-out; /* Habilita transiciones suaves */
+    z-index: 10;
+    
+    /* Animación para que entre de lado */
+    animation: slideIn 3s forwards ease-in-out;
+    animation-delay: 0.5s;
+}
+
+/* Keyframes para la animación de entrada */
+@keyframes slideIn {
+    0% { left: -30vw; } /* Posición inicial */
+    100% { left: 50%; transform: translate(-50%, -50%) rotate(-45deg); } /* Posición final centrada */
 }
 
 /* Pseudo-elementos para las curvas superiores del corazón */
 #corazon-globo::before,
 #corazon-globo::after {
     content: "";
-    width: 15vw;
-    height: 12vw;
-    background: #ff0000;
+    width: var(--initial-size);
+    height: calc(var(--initial-size) * 0.8);
+    background: var(--heart-color);
     border-radius: 50%;
     position: absolute;
 }
 
 #corazon-globo::before {
-    left: -7.5vw;
+    left: calc(var(--initial-size) * -0.5);
 }
 
 #corazon-globo::after {
-    top: -6vw;
+    top: calc(var(--initial-size) * -0.4);
 }
 
-/* Estilo del texto en el centro */
+/* ---------------------- ESTILO DEL TEXTO ---------------------- */
+
 #texto-principal {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) rotate(45deg); /* Des-gira el texto */
     color: white;
-    font-size: 1.5vw;
+    font-size: calc(var(--initial-size) / 8); 
     font-weight: bold;
     text-align: center;
     width: 100%;
     z-index: 10;
-    pointer-events: none; /* Ignora el clic para que solo afecte al corazón */
+    pointer-events: none; 
 }
 
-/* Estilo para la explosión */
+/* ---------------------- ESTILOS DE EXPLOSIÓN Y MENSAJE FINAL ---------------------- */
+
 .explosion {
-    animation: fadeOut 0.5s forwards;
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
 }
 
-@keyframes fadeOut {
-    to {
-        opacity: 0;
-    }
+.final-message {
+    font-family: 'Arial Black', sans-serif;
+    color: var(--text-color);
+    font-size: 8vmin; 
+    text-align: center;
+    line-height: 1.2;
+    z-index: 20;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Estilo para los emojis de corazón flotantes */
+.heart-emoji {
+    position: fixed;
+    font-size: 3vmin;
+    animation: floatUp 5s infinite ease-in-out;
+    opacity: 0;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-100vh) scale(1.5); opacity: 0; } /* Se van hacia arriba */
 }
